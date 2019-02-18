@@ -28,10 +28,6 @@ code {
   min-height: 100vh;
 }
 
-h1 {
-  text-align: center;
-}
-
 #main-app-area {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -40,6 +36,7 @@ h1 {
 }
 
 #preview {
+  text-align: left;
   border: 1px solid #abadb3; 
   margin: 1px;
   background-color: var(--main-preview-color);
