@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import marked from 'marked';
 import Editor from './components/Editor';
 import Preview from './components/Preview';
-
 
 const displayAtStart = `# This is an H1 tag
 ____
@@ -21,6 +19,10 @@ ____
 And a quote from **Leonardo da Vinci**:
 >“Simplicity is the ultimate sophistication.”
 ____
+
+Some \`<span><div></div></span>\` div~! 
+___
+
 Now let us add some code!
 \`\`\`
     if (isAwesome){
@@ -29,7 +31,6 @@ Now let us add some code!
 \`\`\`
 ____
 
-Some \`<span><div></div></span>\` div~! 
 `;
 
 class App extends Component {
@@ -37,39 +38,12 @@ class App extends Component {
     super(props);
     this.state = {
       textarea: displayAtStart,
-      markdown: ''
     }
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount = () => {
-    this.updatePreview();
-  }
-
-  updatePreview = () => {
-    // selects DOM node
-    let preview = document.getElementById('preview');
-
-    // removed all child nodes for reset
-    while (preview.firstChild) {
-      preview.firstChild.remove();
-    }
-
-    // converts markdown to HTML
-    let convertedMarkdown = marked(this.state.textarea);
-
-    // parses 
-    const parser = new DOMParser();
-    let doc = parser.parseFromString(convertedMarkdown, "text/html");
-    doc = doc.activeElement.innerHTML;
-    preview.insertAdjacentHTML("afterbegin", doc)
-
-  }
-
   handleChange(event) {
-    this.setState({ textarea: '' });
     this.setState({ textarea: event.target.value });
-    this.updatePreview();
   }
 
   render() {    
@@ -78,7 +52,7 @@ class App extends Component {
         <h1> Build a Markdown Previewer</h1>
         <section id="main-app-area">
           <Editor textarea={this.state.textarea} onChange={this.handleChange} />
-          <Preview markdown={this.state.markdown} />
+          <Preview markdown={this.state.textarea} />
         </section>
       </div>
     )
